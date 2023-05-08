@@ -9,9 +9,9 @@ SHUFFLE_BUFFER_SIZE = 100
 
 LEARNING_RATE = 1e-3
 EPOCHS = 30
-TRAIN_BATCH_SIZE = 32  # Let's see, I don't have GPU, Google Colab is best hope
-TEST_BATCH_SIZE = 32  # Let's see, I don't have GPU, Google Colab is best hope
-FULL_BATCH_SIZE = 32
+TRAIN_BATCH_SIZE = 2 # Let's see, I don't have GPU, Google Colab is best hope
+TEST_BATCH_SIZE = 2  # Let's see, I don't have GPU, Google Colab is best hope
+FULL_BATCH_SIZE = 2
 
 ###### Train and Test time #########
 

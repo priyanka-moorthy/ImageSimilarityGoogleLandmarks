@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 import utils
 
-if __name__ == "__main__":
+def main():
     if torch.cuda.is_available():
         device = "cuda"
     else:
@@ -26,6 +26,7 @@ if __name__ == "__main__":
 
     train_size = int(config.TRAIN_RATIO * len(full_dataset))
     val_size = len(full_dataset) - train_size
+    print(train_size, val_size)
 
     train_dataset, val_dataset = torch.utils.data.random_split(
         full_dataset, [train_size, val_size]
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     encoder.to(device)
     decoder.to(device)
 
-    # print(device)
+    print(device)
 
     autoencoder_params = list(encoder.parameters()) + list(decoder.parameters())
     optimizer = optim.AdamW(autoencoder_params, lr=config.LEARNING_RATE)
@@ -101,3 +102,6 @@ if __name__ == "__main__":
     # Dump the embeddings for complete dataset, not just train
     flattened_embedding = numpy_embedding.reshape((num_images, -1))
     np.save(config.EMBEDDING_PATH, flattened_embedding)
+
+if __name__ == "__main__":
+    main()

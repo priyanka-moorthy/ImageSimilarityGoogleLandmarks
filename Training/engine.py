@@ -4,7 +4,6 @@ __all__ = ["train_step", "val_step", "create_embedding"]
 import torch
 import torch.nn as nn
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def train_step(encoder, decoder, train_loader, loss_fn, optimizer, device):
@@ -22,9 +21,6 @@ def train_step(encoder, decoder, train_loader, loss_fn, optimizer, device):
     """
     encoder.train()
     decoder.train()
-
-    # print(device)
-
     for batch_idx, (train_img, target_img) in enumerate(train_loader):
         train_img = train_img.to(device)
         target_img = target_img.to(device)
@@ -94,3 +90,8 @@ def create_embedding(encoder, full_loader, embedding_dim, device):
             # print(embedding.shape)
 
     return embedding
+
+if __name__ == "__main__":
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+

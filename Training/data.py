@@ -5,6 +5,8 @@ from PIL import Image
 import os
 from tqdm import tqdm
 from torch.utils.data import Dataset
+import torchvision.transforms as T
+import config
 
 
 class FolderDataset(Dataset):
@@ -21,22 +23,17 @@ class FolderDataset(Dataset):
         self.all_imgs_dir = self.index_dir(main_dir)
 
     def index_dir(self, directory):
-        files = []
-        for subdir, dirs, files in os.walk(directory):
-            for file in files:
-                files.append(os.path.join(subdir, file))
-        return files
-       
-
+        img_files = [os.path.join(path, name) for path, subdirs, files in os.walk(directory) for name in files]
+        return img_files
 
     def __len__(self):
-        return len(self.all_imgs)
+        return len(self.all_imgs_dir)
 
     def __getitem__(self, idx):
-        img_loc = os.path.join(self.main_dir, self.all_imgs[idx])
+        img_loc =  self.all_imgs_dir[idx]
         image = Image.open(img_loc).convert("RGB")
-
+        transform_size = T.Resize((config.IMG_WIDTH,config.IMG_HEIGHT))
+        resized_img = transform_size(image)
         if self.transform is not None:
-            tensor_image = self.transform(image)
-
+            tensor_image = self.transform(resized_img)
         return tensor_image, tensor_image
